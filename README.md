@@ -6,7 +6,9 @@ Ce projet est un **ETL (Extract, Transform, Load) géospatial** conçu pour **an
 * Le score de priorité est calculé comme suit :
 
 
-![equation](https://latex.codecogs.com/png.latex?\dpi{150}score\_priorite=\frac{nb\_palmiers}{dist\_route\_min+10^{-6}})
+$$
+score\_priorite = \frac{nb\_palmiers}{dist\_route\_min + 10^{-6}}
+$$
 
 
 
