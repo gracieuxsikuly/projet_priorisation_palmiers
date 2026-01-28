@@ -3,8 +3,19 @@ from src import compute_density, compute_distance, compute_priority
 from src import display_console, generate_pdf,generate_priority_map
 
 def main():
-    # --- Extraction ---
-    palmiers, zones, routes = extract_geojson()
+    # --- Extraction local  ---
+    palmiers, zones, routes = extract_geojson(source="local")
+    # extration s3 example---------
+    # palmiers, zones, routes = extract_geojson(source="s3",s3_bucket="mon-bucket",s3_prefix="donnees_sig")
+    # extration api example---------
+    # palmiers, zones, routes = extract_geojson(
+    # source="api",
+    # api_urls={
+    #     "palmiers": "https://api.exemple.com/palmiers.geojson",
+    #     "zones": "https://api.exemple.com/zones.geojson",
+    #     "routes": "https://api.exemple.com/routes.geojson",
+    # })
+
     # --- Transformation ---
     zones = compute_density(zones, palmiers)
     zones = compute_distance(zones, routes)
