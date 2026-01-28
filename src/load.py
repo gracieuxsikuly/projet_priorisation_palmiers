@@ -42,16 +42,6 @@ def display_console(zones, zone_prioritaire):
             floatfmt=".3f"
         )
     )
-def generate_map(zones, palmiers, routes, zone_prioritaire):
-    """Affichage de la carte à l'écran"""
-    fig, ax = plt.subplots(figsize=(12, 12))
-    zones.plot(ax=ax, color="lightgrey", edgecolor="black")
-    palmiers.plot(ax=ax, color="green", markersize=5, label="Palmiers")
-    routes.plot(ax=ax, color="red", linewidth=2, label="Routes")
-    gpd.GeoSeries([zone_prioritaire.geometry]).plot(ax=ax, color="yellow", alpha=0.5, label="Zone prioritaire")
-    plt.legend()
-    plt.title("Carte des zones avec palmiers et routes")
-    plt.show()
 
 def generate_density_chart(zones):
     """Création d'un graphique de densité des palmiers par zone et retour en base64"""
