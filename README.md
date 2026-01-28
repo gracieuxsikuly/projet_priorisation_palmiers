@@ -4,9 +4,10 @@ Ce projet est un **ETL (Extract, Transform, Load) géospatial** conçu pour **an
 **Logique principale :**
 * Les zones avec **plus de palmiers** et **proches des routes** sont considérées comme prioritaires.
 * Le score de priorité est calculé comme suit :
-[
-\text{score_priorite} = \frac{\text{nb_palmiers}}{\text{dist_route_min} + 1e-6}
-]
+$$
+score\_priorite = \frac{nb\_palmiers}{dist\_route\_min + 10^{-6}}
+$$
+
 * `1e-6` est ajouté pour éviter une division par zéro si une zone touche une route.
 ---
 ## 🛠️ Technologies utilisées
