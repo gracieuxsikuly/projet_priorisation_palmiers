@@ -63,7 +63,7 @@ def generate_density_chart(zones):
     plt.xlabel("Zone")
     plt.ylabel("Nombre de palmiers")
     plt.title("Densité de palmiers par zone")
-    plt.xticks(rotation=45, ha='right')  # rotation pour éviter chevauchement
+    plt.xticks(rotation=45, ha='right') 
     
     buf = BytesIO()
     plt.tight_layout()
@@ -95,8 +95,8 @@ def generate_map_pdf(zones, palmiers, routes, zone_prioritaire):
 def generate_pdf(zones, zone_prioritaire, palmiers, routes, pdf_path="reports/rapport_final.pdf"):
     """Création d'un PDF complet avec tableau, graphique, carte et explication avec reportlab"""
     # Génération des images base64
-    chart_base64 = generate_density_chart(zones)       # Graphique densité
-    map_base64 = generate_map_pdf(zones, palmiers, routes, zone_prioritaire)  # Carte
+    chart_base64 = generate_density_chart(zones)    
+    map_base64 = generate_map_pdf(zones, palmiers, routes, zone_prioritaire)  
     
     # Création du PDF
     os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
