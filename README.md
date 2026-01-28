@@ -7,8 +7,7 @@ Ce projet est un **ETL (Extract, Transform, Load) géospatial** conçu pour **an
 
 
 $$
-\text{score\_priorite} =
-\frac{\text{nb\_palmiers}}{\text{dist\_route\_min} + 10^{-6}}
+score_{priorite} = \frac{nb_{palmiers}}{dist_{route\_min} + 10^{-6}}
 $$
 
 
