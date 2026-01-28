@@ -89,6 +89,10 @@ Ils permettront de vérifier :
 * La bonne attribution du nombre de palmiers par zone
 * La génération correcte du score de priorité
 ---
+## 👤 Auteur
+
+**Gracieux Sikuly|graciersikuly@gmail.com** – Développeur du projet ETL SIG de priorisation des palmiers
+
 ## 🤝 Contributions
 Les contributions sont les bienvenues !
 Merci de soumettre vos **issues** ou **pull requests** pour améliorer le projet.
