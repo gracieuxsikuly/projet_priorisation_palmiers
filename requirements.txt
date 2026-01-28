@@ -4,7 +4,6 @@ pandas
 matplotlib
 tabulate
 seaborn
-fiona
 pyproj
 sqlalchemy
 psycopg2-binary
