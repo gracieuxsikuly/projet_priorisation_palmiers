@@ -1,0 +1,17 @@
+
+geopandas
+shapely
+pandas
+matplotlib
+tabulate
+seaborn
+fiona
+pyproj
+sqlalchemy
+psycopg2-binary
+python-dotenv
+requests
+boto3
+jinja2
+pdfkit
+geoalchemy2
