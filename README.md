@@ -96,7 +96,7 @@ Ils permettront de vérifier :
 ## 🖼️ Exemple de Résultat
 
 ### Carte Prioritaire
-![Carte Prioritaire](images/A_map-style_digital_illustration_illustrates_palm_.png)
+![Carte Prioritaire](reports/rapport_priorite.png)
 
 ## 👤 Auteur
 
