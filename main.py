@@ -1,6 +1,6 @@
 from src.extract import extract_geojson
 from src.transform import compute_density, compute_distance, compute_priority
-from src.load import display_console, generate_pdf
+from src.load import display_console, generate_pdf,generate_priority_map
 
 def main():
     # --- Extraction ---
@@ -11,8 +11,8 @@ def main():
     zones, zone_prioritaire = compute_priority(zones)
     # --- Chargement / Visualisation ---
     display_console(zones, zone_prioritaire)
-    # generate_map(zones, palmiers, routes, zone_prioritaire)
     generate_pdf(zones, zone_prioritaire, palmiers, routes)  # PDF avec tableau, graphique et carte
+    generate_priority_map(zones, palmiers, routes)
 
 if __name__ == "__main__":
     main()

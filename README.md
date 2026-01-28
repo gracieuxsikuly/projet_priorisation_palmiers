@@ -93,6 +93,11 @@ Ils permettront de vérifier :
 * La bonne attribution du nombre de palmiers par zone
 * La génération correcte du score de priorité
 ---
+## 🖼️ Exemple de Résultat
+
+### Carte Prioritaire
+![Carte Prioritaire](images/A_map-style_digital_illustration_illustrates_palm_.png)
+
 ## 👤 Auteur
 
 **Gracieux Sikuly|graciersikuly@gmail.com** – Développeur du projet ETL SIG de priorisation des palmiers

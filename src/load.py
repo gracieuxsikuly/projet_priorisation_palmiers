@@ -9,6 +9,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet
+import numpy as np
 
 
 def display_console(zones, zone_prioritaire):
@@ -68,7 +69,7 @@ def generate_map_pdf(zones, palmiers, routes, zone_prioritaire):
     fig, ax = plt.subplots(figsize=(12,12))
     zones.plot(ax=ax, color="lightgrey", edgecolor="black")
     palmiers.plot(ax=ax, color="green", markersize=5, label="Palmiers")
-    routes.plot(ax=ax, color="red", linewidth=2, label="Routes")
+    routes.plot(ax=ax, color="grey", linewidth=2, label="Routes")
     gpd.GeoSeries([zone_prioritaire.geometry]).plot(ax=ax, color="yellow", alpha=0.5, label="Zone prioritaire")
     plt.legend()
     plt.title("Carte des zones avec palmiers et routes")
@@ -144,4 +145,53 @@ def generate_pdf(zones, zone_prioritaire, palmiers, routes, pdf_path="reports/ra
     # Génération PDF
     doc.build(elements)
     print(f"\nRapport PDF complet généré : {pdf_path}")
+
+def generate_priority_map(zones, palmiers, routes, pdf_path="reports/rapport_priorite.png"):
+    """
+    Création d'une carte type 'Exemple de Résultat' :
+    - Zones colorées selon le score de priorité (faible, moyenne, haute)
+    - Palmiers et routes
+    - Zone prioritaire surlignée
+    """
+    import matplotlib.patches as mpatches
+    
+    # Définir les couleurs selon le score de priorité
+    conditions = [
+        zones["score_priorite"] >= zones["score_priorite"].quantile(0.75),  # haute priorité
+        zones["score_priorite"] >= zones["score_priorite"].quantile(0.4),   # moyenne priorité
+        zones["score_priorite"] < zones["score_priorite"].quantile(0.4)     # faible priorité
+    ]
+    colors = ["red", "orange", "green"]
+    zones["color"] = np.select(conditions, colors, default="green")
+    
+    fig, ax = plt.subplots(figsize=(12,12))
+    
+    # Zones colorées
+    zones.plot(ax=ax, color=zones["color"], edgecolor="black", alpha=0.6)
+    
+    # Palmiers
+    # palmiers.plot(ax=ax, color="darkgreen", markersize=5)
+    
+    # Routes
+    routes.plot(ax=ax, color="grey", linewidth=2)
+    
+    # Zone prioritaire (top 1)
+    top_zone = zones.sort_values("score_priorite", ascending=False).iloc[0]
+    gpd.GeoSeries([top_zone.geometry]).boundary.plot(ax=ax, color="yellow", linewidth=3)
+    
+    # Légendes
+    high_patch = mpatches.Patch(color='red', label='Haute Priorité')
+    mid_patch = mpatches.Patch(color='orange', label='Priorité Moyenne')
+    low_patch = mpatches.Patch(color='green', label='Faible Priorité')
+    ax.legend(handles=[high_patch, mid_patch, low_patch])
+    
+    ax.set_title("Carte de Priorisation des Zones")
+    ax.axis('off')
+    
+    # Sauvegarde
+    os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
+    plt.savefig(pdf_path, bbox_inches="tight")
+    plt.close()
+    print(f"Carte de priorité générée : {pdf_path}")
+
 
