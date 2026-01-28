@@ -13,7 +13,7 @@ def main():
 
     # --- Chargement / Visualisation ---
     display_console(zones, zone_prioritaire)
-    generate_map(zones, palmiers, routes, zone_prioritaire)
+    # generate_map(zones, palmiers, routes, zone_prioritaire)
     generate_pdf(zones, zone_prioritaire, palmiers, routes)  # PDF avec tableau, graphique et carte
 
 if __name__ == "__main__":

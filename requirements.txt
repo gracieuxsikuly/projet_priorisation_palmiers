@@ -11,5 +11,5 @@ python-dotenv
 requests
 boto3
 jinja2
-pdfkit
+reportlab
 geoalchemy2
