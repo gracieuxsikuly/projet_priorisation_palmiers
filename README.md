@@ -63,7 +63,64 @@ pip install -r requirements.txt
 ---
 ## 🧩 Fonctionnement de l’ETL
 1. **Extract**
-   * Les fichiers des couches (`palmiers`, `routes`, `zones`) sont chargés depuis le dossier `data/`.
+   * Les fichiers des couches (`palmiers`, `routes`, `zones`) sont chargés depuis plusieurs sources.
+## 📥 Sources de données
+
+Le module **Extract** de cet ETL SIG est conçu pour être **flexible** et permet de charger les données géospatiales depuis plusieurs sources : **local**, **Amazon S3** ou **API distante**.
+
+Les couches utilisées sont :
+* **Palmiers** (`palmiers.geojson`)
+* **Zones de culture** (`zones_cultures.geojson`)
+* **Routes** (`highway.geojson`)
+Toutes les couches sont automatiquement reprojetées en **UTM 35S (EPSG:32735)** afin de garantir la cohérence spatiale des analyses.
+---
+### 🔹 Source locale
+Les données sont lues directement depuis le dossier `data/` du projet.
+**Structure attendue :**
+```
+data/
+├─ palmiers.geojson
+├─ zones_cultures.geojson
+└─ highway.geojson
+```
+**Utilisation :**
+```python
+palmiers, zones, routes = extract_geojson(source="local")
+```
+---
+### 🔹 Source Amazon S3
+Les données peuvent être stockées dans un bucket S3.
+Le chargement est effectué **directement en mémoire** via `get_object`, sans téléchargement sur disque.
+**Prérequis :**
+* Identifiants AWS configurés (`AWS_PROFILE` ou variables d’environnement)
+* Accès au bucket S3
+**Utilisation :**
+```python
+palmiers, zones, routes = extract_geojson(
+    source="s3",
+    s3_bucket="mon-bucket-sig",
+    s3_prefix="donnees_palmiers"
+)
+```
+---
+### 🔹 Source API (GeoJSON distant)
+Les couches peuvent être récupérées via des **endpoints HTTP** exposant des fichiers GeoJSON.
+**Utilisation :**
+```python
+palmiers, zones, routes = extract_geojson(
+    source="api",
+    api_urls={
+        "palmiers": "https://api.exemple.com/palmiers.geojson",
+        "zones": "https://api.exemple.com/zones.geojson",
+        "routes": "https://api.exemple.com/routes.geojson"
+    }
+)
+```
+### 🧭 Harmonisation spatiale
+Quelle que soit la source des données :
+* Toutes les couches sont reprojetées en **EPSG:32735**
+* Cela garantit la précision des calculs de distance, de densité et de priorité
+---
 2. **Transform**
    * Les données sont transformées et enrichies :
      * Calcul du **nombre de palmiers par zone**
