@@ -1,0 +1,84 @@
+2026-01-29 19:55:13,723 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 19:55:25,718 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 19:55:25,952 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 19:55:25,955 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 19:55:33,905 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 19:55:34,131 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 19:55:34,134 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 19:55:57,446 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 19:55:57,719 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:18:14,957 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:18:25,101 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:18:25,334 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:18:25,337 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:18:32,967 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:18:33,189 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:18:33,191 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:18:43,433 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:18:43,667 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:20:03,656 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:20:13,991 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:20:14,222 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:20:14,226 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:20:22,038 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:20:22,270 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:20:22,274 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:20:36,051 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:20:36,287 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:35:50,772 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:36:02,916 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:36:03,153 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:36:03,157 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:36:11,163 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:36:11,414 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:36:11,417 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:36:31,731 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:36:31,978 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:36:33,152 | INFO | Carte sauvegardée localement : reports/rapport_priorite.png
+2026-01-29 20:40:36,817 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:40:48,214 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:40:48,466 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:40:48,471 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:40:56,906 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:40:57,151 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:40:57,155 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:41:11,536 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:41:11,780 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:41:12,861 | INFO | Carte sauvegardée localement : reports/rapport_priorite.png
+2026-01-29 20:44:12,280 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:44:27,553 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:44:27,779 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:44:27,781 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:44:35,421 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:44:35,650 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:44:35,654 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:44:55,776 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:44:56,053 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:51:20,742 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:51:30,024 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:51:30,280 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:51:30,284 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:51:38,836 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:51:39,083 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:51:39,084 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:51:52,856 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:51:53,107 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:54:35,138 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:54:46,929 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:54:47,192 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:54:47,194 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:54:55,982 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:54:56,239 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:54:56,242 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:55:07,396 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:55:07,646 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:56:22,499 | INFO | Début extraction PostGIS | table=palmiers_valid | chunksize=50000
+2026-01-29 20:56:34,296 | INFO | Chunk lu | table=palmiers_valid | lignes=2985 | total=2985
+2026-01-29 20:56:34,562 | INFO | Fin extraction | table=palmiers_valid | lignes_totales=2985
+2026-01-29 20:56:34,565 | INFO | Début extraction PostGIS | table=zones_cultures_valid | chunksize=50000
+2026-01-29 20:56:43,506 | INFO | Chunk lu | table=zones_cultures_valid | lignes=50 | total=50
+2026-01-29 20:56:43,744 | INFO | Fin extraction | table=zones_cultures_valid | lignes_totales=50
+2026-01-29 20:56:43,746 | INFO | Début extraction PostGIS | table=highway_valid | chunksize=50000
+2026-01-29 20:56:55,408 | INFO | Chunk lu | table=highway_valid | lignes=2763 | total=2763
+2026-01-29 20:56:55,656 | INFO | Fin extraction | table=highway_valid | lignes_totales=2763
+2026-01-29 20:56:56,537 | INFO | Found credentials in shared credentials file: ~/.aws/credentials

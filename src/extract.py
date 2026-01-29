@@ -5,10 +5,21 @@ from io import BytesIO
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import pandas as pd
+import logging
+from tqdm import tqdm
 
+LOG_DIR = "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+log_file = os.path.join(LOG_DIR, "extract.log")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    handlers=[
+        logging.FileHandler(log_file, mode="a", encoding="utf-8"),
+        logging.StreamHandler()
+    ]
+)
 load_dotenv()
-
-
 def _read_geojson(path_or_url):
     """Lecture GeoJSON depuis un chemin local ou une URL"""
     return gpd.read_file(path_or_url)
@@ -41,7 +52,7 @@ def _read_postgis_chunked(
     geom_col="geometry",
     chunksize=50_000
 ):
-    """Lecture PostGIS par chunks (simple, robuste)"""
+    """Lecture PostGIS par chunks avec logs et progress bar"""
 
     db_user = os.getenv("DB_USER")
     db_password = os.getenv("DB_PASSWORD")
@@ -56,23 +67,52 @@ def _read_postgis_chunked(
 
     query = f"SELECT * FROM {db_schema}.{table_name}"
 
-    chunks = []
+    logging.info(
+        "Début extraction PostGIS | table=%s | chunksize=%s",
+        table_name,
+        chunksize
+    )
 
-    for gdf_chunk in gpd.read_postgis(
-        query,
-        engine,
-        geom_col=geom_col,
-        chunksize=chunksize
+    chunks = []
+    total_rows = 0
+
+    for gdf_chunk in tqdm(
+        gpd.read_postgis(
+            query,
+            engine,
+            geom_col=geom_col,
+            chunksize=chunksize
+        ),
+        desc=f"Lecture {table_name}",
+        unit="chunk"
     ):
+        chunk_size = len(gdf_chunk)
+        total_rows += chunk_size
+
+        logging.info(
+            "Chunk lu | table=%s | lignes=%s | total=%s",
+            table_name,
+            chunk_size,
+            total_rows
+        )
+
         chunks.append(gdf_chunk)
 
     if not chunks:
+        logging.warning("Aucune donnée trouvée | table=%s", table_name)
         return gpd.GeoDataFrame()
+
+    logging.info(
+        "Fin extraction | table=%s | lignes_totales=%s",
+        table_name,
+        total_rows
+    )
 
     return gpd.GeoDataFrame(
         pd.concat(chunks, ignore_index=True),
         crs=chunks[0].crs
     )
+
 def extract_geojson(
     source="postgresql",
     data_dir="data/",
