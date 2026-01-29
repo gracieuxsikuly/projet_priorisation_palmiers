@@ -4,6 +4,7 @@ import boto3
 from io import BytesIO
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()
 
@@ -20,23 +21,60 @@ def _read_geojson_from_s3(bucket, key):
     return gpd.read_file(BytesIO(geojson_bytes))
 
 
-def _read_postgis(table_name, geom_col="geometry"):
-    """Lecture d'une table PostGIS"""
+# def _read_postgis(table_name, geom_col="geometry"):
+#     """Lecture d'une table PostGIS"""
+#     db_user = os.getenv("DB_USER")
+#     db_password = os.getenv("DB_PASSWORD")
+#     db_host = os.getenv("DB_HOST")
+#     db_port = os.getenv("DB_PORT", 5432)
+#     db_name = os.getenv("DB_NAME")
+#     db_schema = os.getenv("DB_SCHEMA")
+
+#     engine = create_engine(
+#         f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+#     )
+
+#     query = f"SELECT * FROM {db_schema}.{table_name}"
+#     return gpd.read_postgis(query, engine, geom_col=geom_col)
+def _read_postgis_chunked(
+    table_name,
+    geom_col="geometry",
+    chunksize=50_000
+):
+    """Lecture PostGIS par chunks (simple, robuste)"""
+
     db_user = os.getenv("DB_USER")
     db_password = os.getenv("DB_PASSWORD")
     db_host = os.getenv("DB_HOST")
     db_port = os.getenv("DB_PORT", 5432)
     db_name = os.getenv("DB_NAME")
+    db_schema = os.getenv("DB_SCHEMA")
 
     engine = create_engine(
         f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
     )
 
-    query = f"SELECT * FROM {table_name}"
-    return gpd.read_postgis(query, engine, geom_col=geom_col)
+    query = f"SELECT * FROM {db_schema}.{table_name}"
 
+    chunks = []
+
+    for gdf_chunk in gpd.read_postgis(
+        query,
+        engine,
+        geom_col=geom_col,
+        chunksize=chunksize
+    ):
+        chunks.append(gdf_chunk)
+
+    if not chunks:
+        return gpd.GeoDataFrame()
+
+    return gpd.GeoDataFrame(
+        pd.concat(chunks, ignore_index=True),
+        crs=chunks[0].crs
+    )
 def extract_geojson(
-    source="postgresql",   # 🔥 PostgreSQL devient la source par défaut
+    source="postgresql",
     data_dir="data/",
     s3_bucket=None,
     s3_prefix=None,
@@ -51,9 +89,9 @@ def extract_geojson(
     """
 
     if source == "postgresql":
-        palmiers = _read_postgis("palmiers_valid")
-        zones = _read_postgis("zones_cultures_valid")
-        routes = _read_postgis("highway_valid")
+        palmiers = _read_postgis_chunked("palmiers_valid")
+        zones = _read_postgis_chunked("zones_cultures_valid")
+        routes = _read_postgis_chunked("highway_valid")
 
     elif source == "local":
         palmiers = _read_geojson(os.path.join(data_dir, "palmiers.geojson"))
