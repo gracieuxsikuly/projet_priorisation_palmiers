@@ -2,7 +2,10 @@ import geopandas as gpd
 import os
 import boto3
 from io import BytesIO
-import json
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def _read_geojson(path_or_url):
@@ -10,8 +13,30 @@ def _read_geojson(path_or_url):
     return gpd.read_file(path_or_url)
 
 
+def _read_geojson_from_s3(bucket, key):
+    s3 = boto3.client("s3")
+    response = s3.get_object(Bucket=bucket, Key=key)
+    geojson_bytes = response["Body"].read()
+    return gpd.read_file(BytesIO(geojson_bytes))
+
+
+def _read_postgis(table_name, geom_col="geometry"):
+    """Lecture d'une table PostGIS"""
+    db_user = os.getenv("DB_USER")
+    db_password = os.getenv("DB_PASSWORD")
+    db_host = os.getenv("DB_HOST")
+    db_port = os.getenv("DB_PORT", 5432)
+    db_name = os.getenv("DB_NAME")
+
+    engine = create_engine(
+        f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+    )
+
+    query = f"SELECT * FROM {table_name}"
+    return gpd.read_postgis(query, engine, geom_col=geom_col)
+
 def extract_geojson(
-    source="local",
+    source="postgresql",   # 🔥 PostgreSQL devient la source par défaut
     data_dir="data/",
     s3_bucket=None,
     s3_prefix=None,
@@ -19,12 +44,18 @@ def extract_geojson(
     target_crs="EPSG:32735"
 ):
     """Extraction des couches géographiques depuis plusieurs sources :
+    - postgresql (par défaut)
     - local
     - s3
     - api
     """
 
-    if source == "local":
+    if source == "postgresql":
+        palmiers = _read_postgis("palmiers_valid")
+        zones = _read_postgis("zones_cultures_valid")
+        routes = _read_postgis("highway_valid")
+
+    elif source == "local":
         palmiers = _read_geojson(os.path.join(data_dir, "palmiers.geojson"))
         zones = _read_geojson(os.path.join(data_dir, "zones_cultures.geojson"))
         routes = _read_geojson(os.path.join(data_dir, "highway.geojson"))
@@ -32,6 +63,7 @@ def extract_geojson(
     elif source == "s3":
         if not s3_bucket or not s3_prefix:
             raise ValueError("s3_bucket et s3_prefix sont requis pour la source S3")
+
         palmiers = _read_geojson_from_s3(
             s3_bucket, f"{s3_prefix}/palmiers.geojson"
         )
@@ -51,7 +83,7 @@ def extract_geojson(
         routes = _read_geojson(api_urls["routes"])
 
     else:
-        raise ValueError("Source inconnue : local | s3 | api")
+        raise ValueError("Source inconnue : postgresql | local | s3 | api")
 
     # Harmonisation CRS
     palmiers = palmiers.to_crs(target_crs)
@@ -59,9 +91,3 @@ def extract_geojson(
     routes = routes.to_crs(target_crs)
 
     return palmiers, zones, routes
-
-def _read_geojson_from_s3(bucket, key):
-    s3 = boto3.client("s3")
-    response = s3.get_object(Bucket=bucket, Key=key)
-    geojson_bytes = response["Body"].read()
-    return gpd.read_file(BytesIO(geojson_bytes))

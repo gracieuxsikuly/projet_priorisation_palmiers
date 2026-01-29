@@ -4,7 +4,7 @@ from src import display_console, generate_pdf,generate_priority_map
 
 def main():
     # --- Extraction local  ---
-    palmiers, zones, routes = extract_geojson(source="local")
+    palmiers, zones, routes = extract_geojson(source="postgresql")
     # extration s3 example---------
     # palmiers, zones, routes = extract_geojson(source="s3",s3_bucket="mon-bucket",s3_prefix="donnees_sig")
     # extration api example---------
