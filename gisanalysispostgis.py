@@ -31,9 +31,9 @@ engine = create_engine(
 
 # ========================= MAIN =========================
 def main():
-    logger.info("🚀 STARTING SQL-ONLY POSTGIS PIPELINE")
+    logger.info("STARTING SQL-ONLY POSTGIS PIPELINE")
     # ====================== 1. Spatial Indexes ======================
-    logger.info("⚡ Ensuring spatial indexes...")
+    logger.info("Ensuring spatial indexes...")
     with engine.begin() as conn:
         conn.execute(text(f"""
             CREATE INDEX IF NOT EXISTS idx_highway_valid_geom
@@ -62,19 +62,16 @@ def main():
             );
         """))
     # ====================== 4. Zone analysis ======================
-    logger.info("📊 Running zone prioritization analysis...")
+    logger.info("Running zone prioritization analysis...")
     zone_analysis_query = text(f"""
                 DROP TABLE IF EXISTS {SCHEMA}.zoneculture_analysis;
-
                 CREATE TABLE {SCHEMA}.zoneculture_analysis AS
                 WITH stats AS (
                     SELECT
                     z.designation,
                     z.geometry,
-
                     -- 1️ Nombre de palmiers dans la zone
                     COUNT(p.*) AS nb_palmiers,
-
                     -- 2️ Distance minimale centroïde → route (KNN veut dire K-Nearest Neighbors (en français : les K plus proches voisins). propre)
                     (
                         SELECT
@@ -86,29 +83,22 @@ def main():
                         ORDER BY ST_Centroid(z.geometry) <-> r.geometry
                         LIMIT 1
                     ) AS dist_route_min
-
                 FROM {SCHEMA}.zones_cultures_valid z
-
                 LEFT JOIN {SCHEMA}.palmiers_valid p
                     ON ST_Within(p.geometry, z.geometry)
-
                 GROUP BY
                     z.designation,
                     z.geometry
             )
-
             SELECT
                 designation,
                 nb_palmiers,
                 dist_route_min,
-
                 -- 3️ Score de priorité 
                 nb_palmiers / (dist_route_min + 1e-6) AS priority_score,
                 geometry
             FROM stats;
             """)
-
-
     with engine.begin() as conn:
         conn.execute(zone_analysis_query)
 
@@ -133,10 +123,6 @@ def main():
     engine,
     geom_col="geometry"
 )
-
-
-
-
     print("\n" + "=" * 60)
     print("🏆 TOP 10 PRIORITY ZONES")
     print("=" * 60)
