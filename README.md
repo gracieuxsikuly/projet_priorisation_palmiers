@@ -143,6 +143,38 @@ python main.py
 ```
 * Les rapports et résultats seront générés automatiquement dans le dossier `rapports/`.
 ---
+## 📊 Alternative d'Analyse PostgreSQL/PostGIS
+🗃️ Analyse Directe dans la Base de Données
+Le projet inclut une alternative performante : l'analyse directement dans PostgreSQL/PostGIS via le script gisanalysispostgis.py.
+## 🎯 Pourquoi cette Alternative ?
+Pour les volumes de données importants, exécuter les calculs directement en SQL offre :
+✅ Meilleures performances (indexation spatiale)
+✅ Moins de transfert de données (tout reste dans la BD)
+✅ Intégration facilitée avec d'autres systèmes
+✅ Génération automatique de rapports PDF
+
+## 🚀 Fonctionnalités Principales
+1. Calcul Intégral en SQL
+Toute l'analyse est effectuée dans PostgreSQL :
+Calcul des distances palmiers-routes
+Agrégation par zone
+Calcul du score de priorité
+Tri et sélection des zones prioritaires
+2. Reporting Automatisé
+Génération d'un rapport PDF complet :
+Page 1 : Tableau des 10 zones les plus prioritaires
+Page 2 : Visualisations (graphique + carte)
+Colorisation automatique selon les scores
+3. Intégration Cloud
+Upload automatique du PDF vers Amazon S3
+Structure organisée : outputs/carte/
+## 🔄 Complémentarité avec l'ETL
+Les deux approches sont complémentaires :
+Scénario	Solution Recommandée
+Données légères, exploration	ETL Python (main.py)
+Gros volumes, production	Analyse SQL (gisanalysispostgis.py)
+Pipeline complet	ETL Python + consolidation SQL
+---
 ## 🧪 Tests
 Les tests unitaires et d’intégration peuvent être ajoutés dans un futur dossier `tests/`.
 Ils permettront de vérifier :
